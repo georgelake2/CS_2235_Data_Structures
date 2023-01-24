@@ -34,7 +34,7 @@ package Homework_1;
  * @author Roberto Tamassia
  * @author Michael H. Goldwasser
  */
-public class CreditCard {
+public class CreditCardLake {
     // Instance variables:
     private String customer;      // name of the customer (e.g., "John Bowman")
     private String bank;          // name of the bank (e.g., "California Savings")
@@ -51,7 +51,7 @@ public class CreditCard {
      * @param lim         the credit limit (measured in dollars)
      * @param initialBal  the initial balance (measured in dollars)
      */
-    public CreditCard(String cust, String bk, String acnt, int lim, double initialBal) {
+    public CreditCardLake(String cust, String bk, String acnt, int lim, double initialBal) {
         customer = cust;
         bank = bk;
         account = acnt;
@@ -66,7 +66,7 @@ public class CreditCard {
      * @param acnt    the account identifier (e.g., "5391 0375 9387 5309")
      * @param lim     the credit limit (measured in dollars)
      */
-    public CreditCard(String cust, String bk, String acnt, int lim) {
+    public CreditCardLake(String cust, String bk, String acnt, int lim) {
         this(cust, bk, acnt, lim, 0.0);               // use a balance of zero as default
     }
 
@@ -106,24 +106,24 @@ public class CreditCard {
      * @param amount  the amount of payment made
      */
     public void makePayment(double amount) {            // make a payment
-        if (amount < 0)
+        if (amount < 0)   // check and see if payment amount is a negative number, print error message if so.
             System.out.println("You cannot enter a negative amount");
         else
-            balance -= amount;
+            balance -= amount;  // reduce balance if the payment amount is > 0
 
       }
 
     /**
      * Homework 1.a.
-     * Updates credit limit
+     * Update method that will overwrite the
      * @param new_limit  the credit limit of the card
      */
     public void updateLimit(int new_limit) {            // update the credit limit
         limit = new_limit;
-    }
+    }  // updates the credit limit
 
     // Utility method to print a card's information ---------------------------
-    public static void printSummary(CreditCard card) {
+    public static void printSummary(CreditCardLake card) {
         System.out.println("Customer = " + card.customer);
         System.out.println("Bank = " + card.bank);
         System.out.println("Account = " + card.account);
@@ -134,12 +134,12 @@ public class CreditCard {
     // MAIN ------------------------------------------------------------------
     public static void main(String[] args) {
         // create 3 new credit cards
-        CreditCard[] wallet = new CreditCard[3];
-        wallet[0] = new CreditCard("John Bowman", "California Savings",
+        CreditCardLake[] wallet = new CreditCardLake[3];
+        wallet[0] = new CreditCardLake("John Bowman", "California Savings",
                 "5391 0375 9387 5309", 5000);
-        wallet[1] = new CreditCard("John Bowman", "California Federal",
+        wallet[1] = new CreditCardLake("John Bowman", "California Federal",
                 "3485 0399 3395 1954", 3500);
-        wallet[2] = new CreditCard("John Bowman", "California Finance",
+        wallet[2] = new CreditCardLake("John Bowman", "California Finance",
                 "5391 0375 9387 5309", 2500, 300);
 
         // charge different values to each of the 3 credit cards
@@ -152,8 +152,8 @@ public class CreditCard {
         // print a summary of each credit card
         // make $200 payments on each card until they are no longer > 200
         // print balance after each payment
-        for (CreditCard card : wallet) {
-            CreditCard.printSummary(card);        // calling static method
+        for (CreditCardLake card : wallet) {
+            CreditCardLake.printSummary(card);        // calling static method
             while (card.getBalance() > 200.0) {
                 card.makePayment(200);
                 System.out.println("New balance = " + card.getBalance());
@@ -164,15 +164,15 @@ public class CreditCard {
         // homework 1.a. testing
         // update the credit limit of wallet[0]
         System.out.println("Homework 1.a. Update credit limit");
-        wallet[0].updateLimit(30000);
-        CreditCard.printSummary(wallet[0]);
+        wallet[0].updateLimit(30000);  // update the credit limit via update method
+        CreditCardLake.printSummary(wallet[0]);  // print summary of credit card with new limit
         System.out.println();
 
         // homework 1.b. testing
         // attempt to make a negative payment
         System.out.println("Homework 1.b. Ignore negative payment amount");
-        wallet[1].makePayment(-20);
-        System.out.println(("New balance = " + wallet[1].getBalance()));
+        wallet[1].makePayment(-20);  // test to see if a negative number will reduce balance
+        System.out.println("New balance = " + wallet[1].getBalance());  // print new balance, should be same as original
 
 
 
