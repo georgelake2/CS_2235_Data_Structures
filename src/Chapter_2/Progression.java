@@ -4,26 +4,37 @@ package Chapter_2;
 
 public class Progression {
     /*
-     * Instance Variables
+     * Instance Variables -----------------------------------
      */
 
     protected long current;
 
+    /*
+     * Constructors ----------------------------------------
+     */
+
+    //Constructs a progression with a given start value
     public Progression(long start) { current = start; }  // default
 
-
+    // Constructs a progression starting at zero.
     public Progression() { this(0); }
 
+    /*
+     * Methods -----------------------------------------
+     */
 
+    // Returns the next value of the progression
     public long nextValue() {
         advance();
         return current;
     }
 
+    // Advances the current value to the next value of the progression
     protected void advance() {
         current ++;
     }
 
+    // Prints the next n values of the progression, separated by spaces
     public void printProgression(int n) {
         System.out.println("Current Value " + current);
         System.out.println("Next " + n + " values: ");
