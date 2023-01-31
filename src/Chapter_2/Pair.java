@@ -15,11 +15,18 @@ public class Pair <A, B> {
     public A getFirst() { return first; }
     public B getSecond() { return second; }
     public String toString() { // overrides toString() method
-        return ("");
+        return ("[" + first + ", " + second + "]");
     }
 
-    public static void main(String[] args) {
 
+
+    public static void main(String[] args) {
+        Pair<String,Double> bid;  // A=String, B=Double
+        bid = new Pair<String,Double>("ORCL", 32.07); // example giving types explicitly
+        System.out.println(bid); // or bid.toString
+
+        Pair<Double,Double> point = new Pair<>(1.5, 2.25); // A=Double, B=Double; example
+        System.out.println((point));
     }
 
 }
