@@ -15,31 +15,25 @@ public class Scoreboard {
     }
 
     // methods
-    public boolean add(GameEntry e) { // Try to add a high score, returns True if sucessful
-        int newScore = e.getScore();  // do this if using a variable multiple times
-        // Check if the new score is a high score, and if so add it to the board
-//        if ( numEntries < board.length ) {
-//            numEntries++;
-//            int j = numEntries - 1;
-//            while ( board[j-1].getScore() < newScore ) {
-//                board[j] = board[j-1];
-//                j--;
-//            }
+    public void add(GameEntry entry) {
+        int newScore = entry.getScore();
 
-        if (newScore > board[0].getScore()); {
-            System.out.println("Goes on Board");
-            return true;
+        if (numEntries < board.length || newScore > board[numEntries-1].getScore()) {
+            if (numEntries < board.length)
+                numEntries++;
+            int j = numEntries-1;
+            while (j > 0 && board[j-1].getScore() < newScore) {
+                board[j] = board[j-1];
+                j--;
+            }
+            board[j] = entry;
         }
-
-
     }
 
 
 
     public static void main(String[] args) {
-        // test GameEntry
-        GameEntry ge = new GameEntry("George", 80);
-        Scoreboard highscores = new Scoreboard (10);
-        highscores.add(ge);
+
+
     }
 }

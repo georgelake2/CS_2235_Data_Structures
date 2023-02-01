@@ -6,7 +6,7 @@ public class GameEntry {
     private int score;
 
     // constructor
-    public GameEntry(String n, int s){
+    public GameEntry(String n, int s){ // initialize
         name = n;
         score = s;
     }
