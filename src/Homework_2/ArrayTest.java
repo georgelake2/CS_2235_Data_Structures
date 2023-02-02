@@ -1,9 +1,8 @@
 package Homework_2;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
-public class Start {
+public class ArrayTest {
     public static void main(String[] args) {
 
         /*

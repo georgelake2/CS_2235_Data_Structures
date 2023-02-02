@@ -15,7 +15,7 @@ public class Scoreboard {
     }
 
     // methods
-    public void add(GameEntry entry) {
+    public void add(GameEntry entry) {  // adds a new entry and puts it in the correct spot
         int newScore = entry.getScore();
 
         if (numEntries < board.length || newScore > board[numEntries-1].getScore()) {
