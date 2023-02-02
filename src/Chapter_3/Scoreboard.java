@@ -30,10 +30,41 @@ public class Scoreboard {
         }
     }
 
+    public GameEntry remove(int i) throws IndexOutOfBoundsException {
+        if (i < 0 || i >= numEntries)
+            throw new IndexOutOfBoundsException("Invalid index: "+ i);
+        GameEntry temp = board[i];
+        for (int j = i; j < numEntries -1; j++)
+            board[j] = board[j+1];
+        board[numEntries-1] = null;
+        numEntries--;
+        return temp;
+    }
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder("[");
+        for (int j = 0; j < numEntries; j++) {
+            if (j > 0)
+                sb.append(", ");
+            sb.append(board[j]);
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 
     public static void main(String[] args) {
+        Scoreboard highscores = new Scoreboard(10);
 
+        GameEntry frank = new GameEntry("Frank", 222);
+        System.out.println("Adding "+ frank);
+        highscores.add(frank);
+        GameEntry ted = new GameEntry("Ted", 111);
+        highscores.add(ted);
+        GameEntry sarah = new GameEntry("Sarah", 555);
+        highscores.add(sarah);
+
+
+        System.out.println(" Scoreboard: " + highscores);
 
     }
 }
