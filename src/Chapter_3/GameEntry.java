@@ -1,12 +1,12 @@
 package Chapter_3;
 
-public class GameEntry {
+public class GameEntry { // note that we could used Pair<String,int>
     // instance variables
     private String name;
     private int score;
 
     // constructor
-    public GameEntry(String n, int s){ // initialize
+    public GameEntry(String n, int s) {
         name = n;
         score = s;
     }
@@ -17,5 +17,5 @@ public class GameEntry {
     public String toString() {
         return "(" + name + ", " + score + ")";
     }
-}
 
+}
