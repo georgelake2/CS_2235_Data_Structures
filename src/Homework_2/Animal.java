@@ -8,11 +8,14 @@
 
 package Homework_2;
 
-public class Animals {
+public class Animal {
     // Instance variables
     private String species = null;
 
     // Constructors
+    public Animal(String s) {
+        species = s;
+    }
 
     // Methods
     public String getSpecies() {
