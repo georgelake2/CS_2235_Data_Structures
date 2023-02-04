@@ -66,11 +66,11 @@ public class Scoreboard {
         Random rand = new Random();
         int[] scores = new int[10];
         rand.setSeed(System.currentTimeMillis());
-        System.out.println(rand.nextInt(3)); // randomly choose an int in range [0, bound-1]
+        //System.out.println(rand.nextInt(3)); // randomly choose an int in range [0, bound-1]
         for (int i=0; i<10; i++) {
             scores[i] = rand.nextInt(101); // scores between 0 and 100
         }
-        System.out.println(Arrays.toString(scores));
+        //System.out.println(Arrays.toString(scores));
         // Arrays.sort(scores);
 
         // Create GameEntry's and add to Scoreboard
