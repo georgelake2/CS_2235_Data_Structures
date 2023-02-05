@@ -25,24 +25,32 @@ public class River {
     // Methods ------------------------------------------
     public int getSize() { // in progress
         /**
-         * get the size of the river array.
-         * DOES THIS MATTER IF SIZE IS PUBLIC?? ----------------------------
+         * get the size of the river array
          */
         return size;
     }
 
-
-    public void initialise(Animal b, Animal f) {  // in progress
+    public void initialize(Animal b, Animal f) {  // in progress
         /**
          * Randomly fill an array with bears, fish, or nothing (null)
          */
         Random rand = new Random();
+        int numBears = 0;
+
         for (int i = 0; i < size; i++) {
             int rand_num = rand.nextInt(3);  // randomly assign a number 0-2
             if (rand_num == 2) { animals[i] = b; } // populate with a bear
             else if (rand_num == 1) { animals[i] = f; }  // populate with a fish
         }
-    }
+        // Make sure that there are at least 2 bears.  Infinite loop otherwise.
+        for (int i = 0; i < size; i++) {
+            if (animals[i] == null) {}
+            else if (animals[i].getSpecies() == "bear" ) { numBears++; }
+        }
+        if (numBears == 0) { animals[0] = b; animals[1] = b; }
+        else if (numBears == 1) { animals[0] = b; }
+
+        }
 
     public void iterate(River a) {     // in progress
         /**
@@ -52,24 +60,65 @@ public class River {
         Random rand = new Random();
         for (int i = 0; i < size; i++) {
             int rand_num = rand.nextInt(3);  // randomly assign a number 0-2
-            if (rand_num == 1) { a.moveLeft(); }
-            else if (rand_num == 2) { a.moveRight(); }
-            else { System.out.println("Animal did not move"); }
+            if (animals[i] != null) { // only move if the cell contains an animal
+                if (rand_num == 1) { a.moveLeft(i); }
+                else if (rand_num == 2) { a.moveRight(i); }
+                else {  } // rand_num == 0, do nothing
+            } else {  } // Remove after testing - this happens when the cell contains a null
         }
     }
 
-    public void moveLeft() {    // in progress
+    public void moveLeft(int cell) {    // in progress
         /**
          * Move the animal left one space.
+         * First cell does not move
+         * If the animals are the same - original cell = null, new cell = animal, replace a null cell with animal
+         * If bear moves to fish - original cell = null, new cell = bear, remove fish
+         * If animal moves to null - original cell = null, new cell = animal
          */
-        System.out.println("moveLeft ran");
+        if (cell != 0) { // if index is not zero
+            if (animals[cell - 1] == null) {  // new cell is null
+                animals[cell - 1] = animals[cell];
+                animals[cell] = null;
+
+            } else if (animals[cell - 1].getSpecies() ==  animals[cell].getSpecies()) {  // animals are the same
+                this.createNew(animals[cell]);
+
+            } else if ((animals[cell - 1].getSpecies() == "fish" & animals[cell].getSpecies() == "bear") |
+                    (animals[cell - 1].getSpecies() == "bear" & animals[cell].getSpecies() == "fish")) {
+                    // bear and fish collide
+                this.removeAnimal(cell-1);
+                this.addAnimal(cell-1);
+                animals[cell] = null;
+
+            } else { System.exit(3); }
+        } else {  } // Remove after testing - This happens when a move left happens on the index zero cell
     }
 
-    public void moveRight() {   // in progress
+    public void moveRight(int cell) {   // in progress
         /**
          * Move the animal right one space.
+         * Last cell does not move
+         * If the animals are the same - original cell = null, new cell = animal, replace a null cell with animal
+         * If bear moves to fish - original cell = null, new cell = bear, remove fish
+         * If animal moves to null - original cell = null, new cell = animal
          */
-        System.out.println("moveRight ran");
+        if (cell != size - 1) { // if index is not the last cell
+            if (animals[cell + 1] == null) {  // new cell is null
+                animals[cell + 1] = animals[cell];
+                animals[cell] = null;
+
+            } else if (animals[cell + 1].getSpecies() == animals[cell].getSpecies()) {  // animals are the same
+                this.createNew(animals[cell]);
+
+            } else if ((animals[cell + 1].getSpecies() == "fish" & animals[cell].getSpecies() == "bear") |
+                    (animals[cell + 1].getSpecies() == "bear" & animals[cell].getSpecies() == "fish")) {
+                this.removeAnimal(cell + 1);
+                this.addAnimal(cell + 1);
+                animals[cell] = null;
+
+            } else { System.exit(5); }
+        } else {  } // Remove after testing - This happens when a move right happens on the last index
     }
 
     public void createNew(Animal a) {   // in progress
@@ -84,30 +133,52 @@ public class River {
         }
     }
 
-    public void add(Animal a) {
+    public void addAnimal(int a) {
         /**
          * Adds a bear to a cell containing a fish if they collide.
          */
+        animals[a] = new Animal("bear");
     }
 
-    public void remove(Animal a) {
+    public void removeAnimal(int a) {
         /**
          * Removes a fish from the array after it encountered a bear.
          */
+        animals[a] = null;
     }
 
-    public String summary() {   // in progress
+    public String summary() {
+        int bears = 0;
+        int fish = 0;
+        int empty = 0;
+        for (int i = 0; i < size; i++) {
+            if (animals[i] == null) { empty++; }
+            else if (animals[i].getSpecies() == "fish") { fish ++; }
+            else if (animals[i].getSpecies() == "bear") { bears ++; }
+            else { System.exit(7);}  // REMOVE AFTER TESTING
+        }
+        String r = "There are currently: \n ";
+        r += fish + " fish \n ";
+        r += bears + " bears \n ";
+        r += empty + " null cells \n";
+        return r;
+    }
+
+    public String toString() {   // in progress
         /**
          * Create a summary string displaying the number of bears, fish, and empty spots
          * in the river array.
          */
         String r = "River: \n";
-
-        // NEED TO DETERMINE HOW TO HANDLE A NULL
-
+        for (int i = 0; i < size; i++) {
+            if (animals[i] == null) {
+                r += (i) + ". null \n";
+            } else {
+                r += (i) + ". " + animals[i].getSpecies() + "\n";
+            }
+        }
         return r;
     }
-
 
     public boolean allBears() { // in progress
         /**
@@ -119,43 +190,43 @@ public class River {
 
         for (int i = 0; i < size; i++) {
             if (animals[i] != null) {
-                if (animals[i].getSpecies() == "bear") {
-                    numBears ++;
-                }
+                if (animals[i].getSpecies() == "bear") { numBears ++; }
             }
         }
-        System.out.println("allBears ran");
         return numBears == size;
-
     }
 
 
 
     // MAIN ----------------------------------------------------
     public static void main(String[] args) {
-        River portneuf = new River(10);
+        River portneuf = new River(500);
         Animal bear = new Animal("bear");
         Animal fish = new Animal("fish");
 
-        // populate river array
-        portneuf.initialise(bear, fish);
+        // populate river array, stop program if there were less than 2 bears created
+        portneuf.initialize(bear, fish);
 
-        // testing an animal to the river array - replace with move method
-        portneuf.createNew(bear);
-
-        // testing allBears Boolean
-        if (portneuf.allBears()) { System.out.println("The river is full of bears!"); }
-        else { System.out.println("The bears have not won yet!"); }
+        // print initialised river population
+        System.out.println(portneuf);
 
         // Iteration - Run until the river is full of bears
-//        do {
-//            portneuf.iterate(portneuf);
-//
-//        } while (!portneuf.allBears());
-        portneuf.iterate(portneuf);
+        int n = 0;
+        do {
+            portneuf.iterate(portneuf);
+            System.out.println(portneuf.summary());
+            System.out.println();
+            n++;
 
-        // final output string - CANNOT HANDLE NULL
-        System.out.println(portneuf.summary());
+        } while (!portneuf.allBears());
 
+        // Program completion output
+        if (portneuf.allBears()) {
+            System.out.println(" THE BEARS HAVE WON!!! ");
+            System.out.println(" It took an excess of " + (n-1) + " rounds.");
+            System.out.println(" ... it would have been faster if the bears were lions from Detroit ... ");}
+
+        // final output string
+        // System.out.println(portneuf);
     }
 }

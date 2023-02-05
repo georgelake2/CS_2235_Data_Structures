@@ -70,7 +70,7 @@ public class Scoreboard {
         for (int i=0; i<10; i++) {
             scores[i] = rand.nextInt(101); // scores between 0 and 100
         }
-        //System.out.println(Arrays.toString(scores));
+        System.out.println(Arrays.toString(scores));
         // Arrays.sort(scores);
 
         // Create GameEntry's and add to Scoreboard
