@@ -44,33 +44,37 @@ public class River {
         }
     }
 
-    public void iterate() {     // in progress
+    public void iterate(River a) {     // in progress
         /**
          * Each iteration should determine if the bears and fish move,
          * and which direction they move, left or right.
          */
-        System.out.println("iteration ran");
-
-
-
+        Random rand = new Random();
+        for (int i = 0; i < size; i++) {
+            int rand_num = rand.nextInt(3);  // randomly assign a number 0-2
+            if (rand_num == 1) { a.moveLeft(); }
+            else if (rand_num == 2) { a.moveRight(); }
+            else { System.out.println("Animal did not move"); }
+        }
     }
 
     public void moveLeft() {    // in progress
-
+        /**
+         * Move the animal left one space.
+         */
+        System.out.println("moveLeft ran");
     }
 
     public void moveRight() {   // in progress
-
-    }
-
-    public void createNew() {   // in progress
-
-    }
-
-    public void add(Animal a) {
         /**
-         * Search for the first null (empty) cell in the river array.
-         * Replace it with a fish or a bear.
+         * Move the animal right one space.
+         */
+        System.out.println("moveRight ran");
+    }
+
+    public void createNew(Animal a) {   // in progress
+        /**
+         *  Creates a new animal (bear or fish) and then moves them to a null cell.
          */
         for (int i = 0; i < size; i++) {
             if (animals[i] == null) {
@@ -78,6 +82,18 @@ public class River {
                 break;
             }
         }
+    }
+
+    public void add(Animal a) {
+        /**
+         * Adds a bear to a cell containing a fish if they collide.
+         */
+    }
+
+    public void remove(Animal a) {
+        /**
+         * Removes a fish from the array after it encountered a bear.
+         */
     }
 
     public String summary() {   // in progress
@@ -125,19 +141,18 @@ public class River {
         portneuf.initialise(bear, fish);
 
         // testing an animal to the river array - replace with move method
-        portneuf.add(bear);
+        portneuf.createNew(bear);
 
         // testing allBears Boolean
         if (portneuf.allBears()) { System.out.println("The river is full of bears!"); }
         else { System.out.println("The bears have not won yet!"); }
 
         // Iteration - Run until the river is full of bears
-        int temp = 0;
-        do {
-            portneuf.iterate();
-            System.out.println("temp = " + temp);
-            temp ++;
-        } while (!portneuf.allBears() & temp < 10);
+//        do {
+//            portneuf.iterate(portneuf);
+//
+//        } while (!portneuf.allBears());
+        portneuf.iterate(portneuf);
 
         // final output string - CANNOT HANDLE NULL
         System.out.println(portneuf.summary());
