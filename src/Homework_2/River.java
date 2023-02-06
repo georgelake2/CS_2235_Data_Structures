@@ -6,9 +6,7 @@
  *  contains MAIN
  */
 package Homework_2;
-import java.util.Arrays;
 import java.util.Random;
-
 
 public class River {
     // Instance variables -------------------------------
@@ -23,14 +21,14 @@ public class River {
     }
 
     // Methods ------------------------------------------
-    public int getSize() { // in progress
+    public int getSize() {
         /**
          * get the size of the river array
          */
         return size;
     }
 
-    public void initialize(Animal b, Animal f) {  // in progress
+    public void initialize(Animal b, Animal f) {
         /**
          * Randomly fill an array with bears, fish, or nothing (null)
          */
@@ -52,7 +50,7 @@ public class River {
 
         }
 
-    public void iterate(River a) {     // in progress
+    public void iterate(River a) {
         /**
          * Each iteration should determine if the bears and fish move,
          * and which direction they move, left or right.
@@ -64,11 +62,11 @@ public class River {
                 if (rand_num == 1) { a.moveLeft(i); }
                 else if (rand_num == 2) { a.moveRight(i); }
                 else {  } // rand_num == 0, do nothing
-            } else {  } // Remove after testing - this happens when the cell contains a null
+            }
         }
     }
 
-    public void moveLeft(int cell) {    // in progress
+    public void moveLeft(int cell) {
         /**
          * Move the animal left one space.
          * First cell does not move
@@ -92,10 +90,10 @@ public class River {
                 animals[cell] = null;
 
             } else { System.exit(3); }
-        } else {  } // Remove after testing - This happens when a move left happens on the index zero cell
+        }
     }
 
-    public void moveRight(int cell) {   // in progress
+    public void moveRight(int cell) {
         /**
          * Move the animal right one space.
          * Last cell does not move
@@ -118,7 +116,7 @@ public class River {
                 animals[cell] = null;
 
             } else { System.exit(5); }
-        } else {  } // Remove after testing - This happens when a move right happens on the last index
+        }
     }
 
     public void createNew(Animal a) {   // in progress
@@ -126,10 +124,7 @@ public class River {
          *  Creates a new animal (bear or fish) and then moves them to a null cell.
          */
         for (int i = 0; i < size; i++) {
-            if (animals[i] == null) {
-                animals[i] = a;
-                break;
-            }
+            if (animals[i] == null) { animals[i] = a; break; }
         }
     }
 
@@ -147,20 +142,27 @@ public class River {
         animals[a] = null;
     }
 
-    public String summary() {
+    public String summary(int s) {
         int bears = 0;
         int fish = 0;
         int empty = 0;
+
         for (int i = 0; i < size; i++) {
             if (animals[i] == null) { empty++; }
             else if (animals[i].getSpecies() == "fish") { fish ++; }
             else if (animals[i].getSpecies() == "bear") { bears ++; }
             else { System.exit(7);}  // REMOVE AFTER TESTING
         }
-        String r = "There are currently: \n ";
-        r += fish + " fish \n ";
-        r += bears + " bears \n ";
-        r += empty + " null cells \n";
+
+        String r = "-----------------------------\n";
+        r += "| Step Number : ";
+        r += s + "\t\t\t|\n";
+        r += "-----------------------------\n";
+        r += "| There are currently:\t\t|\n";
+        r += "| " + fish + " fish\t\t\t\t\t|\n";
+        r += "| " + bears + " bear(s)\t\t\t\t|\n";
+        r += "| " + empty + " null cell(s)\t\t\t|\n";
+        r += "-----------------------------\n";
         return r;
     }
 
@@ -171,11 +173,8 @@ public class River {
          */
         String r = "River: \n";
         for (int i = 0; i < size; i++) {
-            if (animals[i] == null) {
-                r += (i) + ". null \n";
-            } else {
-                r += (i) + ". " + animals[i].getSpecies() + "\n";
-            }
+            if (animals[i] == null) { r += (i) + ". null \n"; }
+            else { r += (i) + ". " + animals[i].getSpecies() + "\n"; }
         }
         return r;
     }
@@ -187,7 +186,6 @@ public class River {
          * otherwise return false.
          */
         int numBears = 0;
-
         for (int i = 0; i < size; i++) {
             if (animals[i] != null) {
                 if (animals[i].getSpecies() == "bear") { numBears ++; }
@@ -195,8 +193,6 @@ public class River {
         }
         return numBears == size;
     }
-
-
 
     // MAIN ----------------------------------------------------
     public static void main(String[] args) {
@@ -207,16 +203,13 @@ public class River {
         // populate river array, stop program if there were less than 2 bears created
         portneuf.initialize(bear, fish);
 
-        // print initialised river population
-        System.out.println(portneuf);
-
         // Iteration - Run until the river is full of bears
         int n = 0;
         do {
-            portneuf.iterate(portneuf);
-            System.out.println(portneuf.summary());
-            System.out.println();
             n++;
+            portneuf.iterate(portneuf);
+            System.out.println(portneuf.summary(n));
+//            System.out.println();
 
         } while (!portneuf.allBears());
 
@@ -225,8 +218,5 @@ public class River {
             System.out.println(" THE BEARS HAVE WON!!! ");
             System.out.println(" It took an excess of " + (n-1) + " rounds.");
             System.out.println(" ... it would have been faster if the bears were lions from Detroit ... ");}
-
-        // final output string
-        // System.out.println(portneuf);
     }
 }
