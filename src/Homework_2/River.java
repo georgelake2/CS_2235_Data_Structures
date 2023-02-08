@@ -33,22 +33,24 @@ public class River {
          * Randomly fill an array with bears, fish, or nothing (null)
          */
         Random rand = new Random();
-        int numBears = 0;
+        int numBears = 0;  // counts number of bears
 
         for (int i = 0; i < size; i++) {
             int rand_num = rand.nextInt(3);  // randomly assign a number 0-2
             if (rand_num == 2) { animals[i] = b; } // populate with a bear
             else if (rand_num == 1) { animals[i] = f; }  // populate with a fish
         }
-        // Make sure that there are at least 2 bears.  Infinite loop otherwise.
+        // Loop to count the number of bears.
         for (int i = 0; i < size; i++) {
-            if (animals[i] == null) {}
-            else if (animals[i].getSpecies() == "bear" ) { numBears++; }
+            if (animals[i] != null) {
+                if (animals[i].getSpecies() == "bear") { numBears++; }
+            }
         }
+        // If there are less than 2 bears, manually add.  Otherwise, there will be an infinite loop.
         if (numBears == 0) { animals[0] = b; animals[1] = b; }
         else if (numBears == 1) { animals[0] = b; }
 
-        }
+    }
 
     public void iterate(River a) {
         /**
@@ -56,12 +58,20 @@ public class River {
          * and which direction they move, left or right.
          */
         Random rand = new Random();
+
+        // reset movement flags
         for (int i = 0; i < size; i++) {
-            int rand_num = rand.nextInt(3);  // randomly assign a number 0-2
+            if (animals[i] != null) { animals[i].flag = false; }
+        }
+
+        // randomly attempt to move right, left, or stay on each cell in the array.
+        for (int i = 0; i < size; i++) {
             if (animals[i] != null) { // only move if the cell contains an animal
-                if (rand_num == 1) { a.moveLeft(i); }
-                else if (rand_num == 2) { a.moveRight(i); }
-                else {  } // rand_num == 0, do nothing
+                if (!animals[i].getFlag()) { // only move if the animal has yet to move
+                    int rand_num = rand.nextInt(3);  // randomly assign a number 0-2
+                    if (rand_num == 1) { a.moveLeft(i); }
+                    else if (rand_num == 2) { a.moveRight(i); }
+                }
             }
         }
     }
@@ -75,21 +85,21 @@ public class River {
          * If animal moves to null - original cell = null, new cell = animal
          */
         if (cell != 0) { // if index is not zero
-            if (animals[cell - 1] == null) {  // new cell is null
+            // bear or fish moves to null
+            if (animals[cell - 1] == null) {
                 animals[cell - 1] = animals[cell];
                 animals[cell] = null;
-
+            // animals are the same
             } else if (animals[cell - 1].getSpecies() ==  animals[cell].getSpecies()) {  // animals are the same
                 this.createNew(animals[cell]);
-
+            // fish moves to bear or bear moves to fish
             } else if ((animals[cell - 1].getSpecies() == "fish" & animals[cell].getSpecies() == "bear") |
                     (animals[cell - 1].getSpecies() == "bear" & animals[cell].getSpecies() == "fish")) {
-                    // bear and fish collide
-                this.removeAnimal(cell-1);
-                this.addAnimal(cell-1);
+                // bear and fish collide
+                this.removeAnimal(cell - 1);
+                this.addAnimal(cell - 1);
                 animals[cell] = null;
-
-            } else { System.exit(3); }
+            }
         }
     }
 
@@ -100,26 +110,38 @@ public class River {
          * If the animals are the same - original cell = null, new cell = animal, replace a null cell with animal
          * If bear moves to fish - original cell = null, new cell = bear, remove fish
          * If animal moves to null - original cell = null, new cell = animal
+         * -
+         * Movement Flags -
+         * If a bear or fish move right onto a null cell
+         * If a bear moves right to a fish cell
+         * Do not trigger if a fish moves to bear.
+         * Do not trigger flag if a new animal is created
          */
         if (cell != size - 1) { // if index is not the last cell
-            if (animals[cell + 1] == null) {  // new cell is null
+            // new cell is null
+            if (animals[cell + 1] == null) {
                 animals[cell + 1] = animals[cell];
+                animals[cell + 1].flag = true; // animal has moved this round
                 animals[cell] = null;
-
-            } else if (animals[cell + 1].getSpecies() == animals[cell].getSpecies()) {  // animals are the same
+            // animals are the same
+            } else if (animals[cell + 1].getSpecies() == animals[cell].getSpecies()) {
                 this.createNew(animals[cell]);
-
-            } else if ((animals[cell + 1].getSpecies() == "fish" & animals[cell].getSpecies() == "bear") |
-                    (animals[cell + 1].getSpecies() == "bear" & animals[cell].getSpecies() == "fish")) {
+            // bear moves to fish
+            } else if (animals[cell + 1].getSpecies() == "fish" & animals[cell].getSpecies() == "bear") {
+                this.removeAnimal(cell + 1);
+                this.addAnimal(cell + 1);
+                animals[cell+1].flag = true;  // the bear moved this round
+                animals[cell] = null;
+            // fish moves to bear
+            } else if (animals[cell + 1].getSpecies() == "bear" & animals[cell].getSpecies() == "fish") {
                 this.removeAnimal(cell + 1);
                 this.addAnimal(cell + 1);
                 animals[cell] = null;
-
-            } else { System.exit(5); }
+            }
         }
     }
 
-    public void createNew(Animal a) {   // in progress
+    public void createNew(Animal a) {
         /**
          *  Creates a new animal (bear or fish) and then moves them to a null cell.
          */
@@ -151,7 +173,6 @@ public class River {
             if (animals[i] == null) { empty++; }
             else if (animals[i].getSpecies() == "fish") { fish ++; }
             else if (animals[i].getSpecies() == "bear") { bears ++; }
-            else { System.exit(7);}  // REMOVE AFTER TESTING
         }
 
         String r = "-----------------------------\n";
@@ -166,7 +187,7 @@ public class River {
         return r;
     }
 
-    public String toString() {   // in progress
+    public String toString() {
         /**
          * Create a summary string displaying the number of bears, fish, and empty spots
          * in the river array.
@@ -179,7 +200,7 @@ public class River {
         return r;
     }
 
-    public boolean allBears() { // in progress
+    public boolean allBears() {
         /**
          * Search the river array
          * Return true if array contains all bears
@@ -200,7 +221,7 @@ public class River {
         Animal bear = new Animal("bear");
         Animal fish = new Animal("fish");
 
-        // populate river array, stop program if there were less than 2 bears created
+        // Initialize - populate river array
         portneuf.initialize(bear, fish);
 
         // Iteration - Run until the river is full of bears
@@ -209,8 +230,6 @@ public class River {
             n++;
             portneuf.iterate(portneuf);
             System.out.println(portneuf.summary(n));
-//            System.out.println();
-
         } while (!portneuf.allBears());
 
         // Program completion output

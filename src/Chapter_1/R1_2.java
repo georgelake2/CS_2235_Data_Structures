@@ -8,6 +8,22 @@ package Chapter_1;
 
 public class R1_2 {
     // instance variables
+    private GameEntry[] entry;
+    private int size;
+
+    // Constructors
+    public R1_2(int n) { // Construct an array called entry n cells long and populated with game entries
+        entry = new GameEntry[n];
+        size = n;
+    }
+
+
+    // Methods
+
+    // MAIN
+    public static void main(String[] args) {
+
+    }
 
 
 }

@@ -11,6 +11,7 @@ package Homework_2;
 public class Animal {
     // Instance variables
     private String species = null;
+    protected boolean flag;  // will be set by the Superclass if the animal moves right.
 
     // Constructors
     public Animal(String s) {
@@ -20,6 +21,10 @@ public class Animal {
     // Methods
     public String getSpecies() {
         return species;
+    }
+
+    public Boolean getFlag() {
+        return flag;
     }
 
 }
