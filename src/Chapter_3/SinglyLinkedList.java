@@ -2,7 +2,7 @@ package Chapter_3;
 
 public class SinglyLinkedList<E> {
     // Nested Node class
-    private static class Node<E> {
+    public static class Node<E> {
         // State
         private E element; // element stored at this node/cell
         private Node<E> next; // reference to next node/cell
@@ -100,6 +100,8 @@ public class SinglyLinkedList<E> {
 
         names.removeFirst();
         System.out.println(names);
+
+
     }
 
 
