@@ -92,7 +92,13 @@ public class SinglyLinkedList<E> {
         names.addLast("Leslie");
         names.addLast("Collin");
         names.addLast("Russell");
+        names.addFirst("Seth");
+        names.addFirst("Karen");
+        names.addFirst("Cesar");
         System.out.println(names.size);
+        System.out.println(names);
+
+        names.removeFirst();
         System.out.println(names);
     }
 
