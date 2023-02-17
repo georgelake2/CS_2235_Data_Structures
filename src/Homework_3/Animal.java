@@ -6,7 +6,7 @@
  *  This class contains the animals that will be in the river LinkedList
  */
 
-package Homework_2;
+package Homework_3;
 
 public class Animal {
     // Instance variables

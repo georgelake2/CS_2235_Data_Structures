@@ -38,9 +38,9 @@ public class DoublyLinkedList<E> {
 
     // Constructors -----------------------------------------
     public DoublyLinkedList() {
-        header = new Node<>(null, null, null);      // create header
-        trailer = new Node<>(null, header, null);   // trailer is preceded by header
-        header.setNext(trailer);                    // header is followed by trailer
+        header = new Node<>(null, null, null);  // create header
+        trailer = new Node<>(null, header, null);  // trailer is preceded by header
+        header.setNext(trailer);                         // header is followed by trailer
     }
 
     // Methods - Accessor -------------------------------
@@ -113,7 +113,7 @@ public class DoublyLinkedList<E> {
 
     // MAIN ----------------------------------------------------------------------
     public static void main(String[]args){
-        long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();  // for run time calculation
 
         // populate list
         DoublyLinkedList<String> names = new DoublyLinkedList<>();
@@ -123,14 +123,14 @@ public class DoublyLinkedList<E> {
         names.addLast("James");
         names.addLast("Jessica");
 
-        // REMOVE Name
+        // Remove Name
         Node<String> toRemove = names.header;
         while ( toRemove.getElement() != "John") {  // find node in linkedlist
             toRemove = toRemove.getNext();
         }
         names.remove(toRemove);
 
-        // ADD TO MIDDLE
+        // Add to Middle
         Node<String> findName = names.header;
         while (findName.getElement() != "George") {  // find node in linkedlist
             findName = findName.getNext();
@@ -148,5 +148,4 @@ public class DoublyLinkedList<E> {
     }
 
 
-} //----------- end of DoublyLinkedList class -----------
-
+}
