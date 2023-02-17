@@ -96,54 +96,57 @@ public class DoublyLinkedList<E> {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder("(");
+        StringBuilder sb = new StringBuilder();
         Node<E> walk = header.getNext();
+        int num = 0;
         while (walk != trailer) {
+            num ++;
+            sb.append(num + ": ");
             sb.append(walk.getElement());
             walk = walk.getNext();
             if (walk != trailer)
-                sb.append(", ");
+                sb.append("\n");
         }
-        sb.append(")");
+        sb.append("\n");
         return sb.toString();
     }
 
     // MAIN ----------------------------------------------------------------------
     public static void main(String[]args){
-        System.out.println("The Doubly Linked List Contains: ");
+        long startTime = System.currentTimeMillis();
 
+        // populate list
         DoublyLinkedList<String> names = new DoublyLinkedList<>();
-        names.addFirst("George");
         names.addFirst("John");
+        names.addFirst("George");
+        names.addFirst("Angie");
         names.addLast("James");
         names.addLast("Jessica");
-        names.addFirst("Allyson");
 
-
-        System.out.println("Print List From Header ------");
-        Node<String> current = names.header.getNext();
-        while (current != names.trailer) {
-            System.out.println(current.getElement());
-            current = current.next;
+        // REMOVE Name
+        Node<String> toRemove = names.header;
+        while ( toRemove.getElement() != "John") {  // find node in linkedlist
+            toRemove = toRemove.getNext();
         }
-        System.out.println("-------------------------\n");
+        names.remove(toRemove);
 
-        System.out.println("Print List From Trailer --");
-        current = names.trailer.getPrev();
-        while (current != names.header ) {
-            System.out.println(current.getElement());
-            current = current.prev;
+        // ADD TO MIDDLE
+        Node<String> findName = names.header;
+        while (findName.getElement() != "George") {  // find node in linkedlist
+            findName = findName.getNext();
         }
-        System.out.println("------------------------\n");
+        names.addBetween("Fatty Valentine", findName, findName.getNext());
 
-        current = names.header.getNext();
-        while   (current.getElement() != "George") {
-            System.out.println("Not George");
-            current = current.next;
-        }
+        // output to screen
+        System.out.println("The Doubly Linked List Contains: ");
+        System.out.println(names);  // uses toString method
 
-
-        System.out.println(names);
+        // determine run time and print
+        long endTime = System.currentTimeMillis();
+        long avg = endTime - startTime;
+        System.out.println("The program took " + avg + " milliseconds.");
     }
+
+
 } //----------- end of DoublyLinkedList class -----------
 
