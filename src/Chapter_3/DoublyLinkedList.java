@@ -120,22 +120,22 @@ public class DoublyLinkedList<E> {
         names.addFirst("John");
         names.addFirst("George");
         names.addFirst("Angie");
-        names.addLast("James");
-        names.addLast("Jessica");
+        names.addFirst("James");
+        names.addFirst("Jessica");
 
         // Remove Name
-        Node<String> toRemove = names.header;
-        while ( toRemove.getElement() != "John") {  // find node in linkedlist
-            toRemove = toRemove.getNext();
-        }
-        names.remove(toRemove);
+//        Node<String> toRemove = names.header;
+//        while ( toRemove.getElement() != "John") {  // find node in linkedlist
+//            toRemove = toRemove.getNext();
+//        }
+//        names.remove(toRemove);
 
         // Add to Middle
-        Node<String> findName = names.header;
-        while (findName.getElement() != "George") {  // find node in linkedlist
-            findName = findName.getNext();
-        }
-        names.addBetween("Fatty Valentine", findName, findName.getNext());
+//        Node<String> findName = names.header;
+//        while (findName.getElement() != "George") {  // find node in linkedlist
+//            findName = findName.getNext();
+//        }
+//        names.addBetween("Fatty Valentine", findName, findName.getNext());
 
         // output to screen
         System.out.println("The Doubly Linked List Contains: ");
