@@ -36,7 +36,7 @@ public class RiverList<E> {
     private int size = 0;
     private int setSize;
 
-    // Constructors ----
+    // Constructors
     public RiverList(int n) {
         header = new Node<>(null, null, null);
         trailer = new Node<>(null, header, null);
@@ -44,7 +44,7 @@ public class RiverList<E> {
         setSize = n;
     }
 
-    // Accessor Methods ------
+    // ACCESSOR METHODS ---------------------------------------------------
     public int getSize() { return size; }
     public boolean isEmpty() { return size == 0; }
     public E first() {
@@ -55,7 +55,7 @@ public class RiverList<E> {
         if (isEmpty()) return null;
         return trailer.getPrev().getElement();
     }
-    // Update Methods ------
+    // PUBLIC UPDATE METHODS ----------------------------------------------
     public void addFirst(E e) { addBetween(e, header, header.getNext()); }
 
     public void addLast(E e) { addBetween(e, trailer.getPrev(), trailer); }
@@ -68,46 +68,43 @@ public class RiverList<E> {
         if (isEmpty()) return null;
         return remove(trailer.getPrev());
     }
-    public void initialize(E b, E f) {
-        /**
-         * Create a linked list of a pre-determined size.
-         * The nodes of the list shall contain a random assortment of fish, bears, and null nodes.
-         */
-        Random rand = new Random();
 
+    /**
+     * Create a linked list of a pre-determined size.
+     * The nodes of the list shall contain a random assortment of fish, bears, and null nodes.
+     */
+    public void initialize(E b, E f) {
+        Random rand = new Random();
         for (int i = 0; i < setSize; i++) {
             int rand_num = rand.nextInt(3);
             if (rand_num == 1) { this.addFirst(b); }
             else if (rand_num == 2) { this.addFirst(f); }
             else { this.addFirst(null); }
-        }
-    }
+        } }
+
+    /**
+     * Iterate through the list.
+     * Look at each node.  If the node is null, then do nothing.
+     * If the node contains a bear or fish, randomly select whether to move right or left.
+     */
     public void iterate() {
-        /**
-         * Iterate through the list.
-         * Look at each node.  If the node is null, then do nothing.
-         * If the node contains a bear or fish, randomly select whether to move right or left.
-         */
         Node<E> walk = header.getNext();
         Random rand = new Random();
-
         while (walk != trailer) {
             if (walk.getElement() != null) {
                 int rand_num = rand.nextInt(3);
                 if (rand_num == 1) { this.moveLeft(walk); }
                 else if (rand_num == 2) { this.moveRight(walk); }
-                else {  }
-
-            } else {  }
+            }
             walk = walk.getNext();
-        }
-    }
+        } }
 
+    /**
+     * Count the number of bears
+     * return true if the list contains all bears.
+     */
     public boolean allBears() {
-        /**
-         * Count the number of bears
-         * return true if the list contains all bears.
-         */
+
         int numBears = 0;
         Node<E> walk = header.getNext();
 
@@ -118,16 +115,16 @@ public class RiverList<E> {
         return (numBears == getSize());
     }
 
-    // Private Update Methods -----------------------
+    // PRIVATE UPDATE METHODS --------------------------------------------------------
+    /**
+     * Attempt to move an animal left.
+     * The first Node does not move.
+     * If animals are the same - original node = null, new node = animal, another null node = animal
+     * If bear moves to fish - original node = null, new node = bear, fish removed.
+     * If fish moves to bear - original node = null, new node = bear, fish removed.
+     * If animal moves to null - original node = null, new node = animal.
+     */
     private void moveLeft(Node<E> w){
-        /**
-         * Attempt to move an animal left.
-         * The first Node does not move.
-         * If animals are the same - original node = null, new node = animal, another null node = animal
-         * If bear moves to fish - original node = null, new node = bear, fish removed.
-         * If fish moves to bear - original node = null, new node = bear, fish removed.
-         * If animal moves to null - original node = null, new node = animal.
-         */
         // first node does not move
         if (w.getPrev() != header) {
 
@@ -148,19 +145,17 @@ public class RiverList<E> {
             // fish moves to bear
             } else if ((w.getElement() == "fish") & (w.getPrev().getElement() == "bear")) {
                 w.setElement(null);
-            }
-        } else { }
-    }
+            } } }
 
+    /**
+     * Attempt to move an animal right.
+     * The last Node does not move.
+     * If animals are the same - original node = null, new node = animal, another null node = animal
+     * If bear moves to fish - original node = null, new node = bear, fish removed.
+     * If fish moves to bear - original node = null, new node = bear, fish removed.
+     * If animal moves to null - original node = null, new node = animal.
+     */
     private void moveRight(Node<E> w) {
-        /**
-         * Attempt to move an animal right.
-         * The last Node does not move.
-         * If animals are the same - original node = null, new node = animal, another null node = animal
-         * If bear moves to fish - original node = null, new node = bear, fish removed.
-         * If fish moves to bear - original node = null, new node = bear, fish removed.
-         * If animal moves to null - original node = null, new node = animal.
-         */
         // last node does not move
         if (w.getNext() != trailer) {
 
@@ -181,17 +176,14 @@ public class RiverList<E> {
                 // fish moves to bear
             } else if ((w.getElement() == "fish") & (w.getNext().getElement() == "bear")) {
                 w.setElement(null);
-            }
-        } else {  }
+            } } }
 
-
-    }
+    /**
+     * Replace the first null node found with either a bear or fish,
+     * determined from move left or move right
+     * w - node that will move.
+     */
     private void replaceNull(Node<E> w) {
-        /**
-         * Replace the first null node found with either a bear or fish,
-         * determined from move left or move right
-         * w - node that will move.
-         */
         Node<E> walk = header.getNext();
         while (walk != trailer) {
             if (walk.getElement() == null) {
@@ -199,22 +191,22 @@ public class RiverList<E> {
                 break;
             }
             walk = walk.getNext();
-        }
-    }
+        } }
+
+    /**
+     * Creates a new animal at a defined location in the list.
+     */
     private void addBetween(E e, Node<E> predecessor, Node<E> successor) {
-        /**
-         * Creates a new animal at a defined location in the list.
-         * Replaces XXXX from HW2 River Array
-         */
         Node<E> newNode = new Node<>(e, predecessor, successor);
         predecessor.setNext(newNode);
         successor.setPrev(newNode);
         size++;
     }
+
+    /**
+     * Used by removeFirst and removeLast
+     */
     private E remove(Node<E> node) {
-        /**
-         * NOT DONE
-         */
         Node<E> predecessor = node.getPrev();
         Node<E> successor = node.getNext();
         predecessor.setNext(successor);
@@ -222,15 +214,21 @@ public class RiverList<E> {
         size--;
         return node.getElement();
     }
-    // String Builders --------------------------
+
+    // String Builders ----------------------------------------------
+    /**
+     * Create a string that will display the elements contained in the list.
+     */
     public String toString() {
-        /**
-         * Create a string that will display the elements contained in the list.
-         */
+        int i = 0;
         StringBuilder sb = new StringBuilder();
         Node<E> walk = header.getNext();
+        sb.append("Contents of RiverList: ");
         sb.append("( ");
         while (walk != trailer) {
+            i++;
+            sb.append(i);
+            sb.append(".");
             sb.append(walk.getElement());
             walk = walk.getNext();
             if (walk != trailer)
@@ -239,11 +237,12 @@ public class RiverList<E> {
         sb.append(" )");
         return sb.toString();
     }
+
+    /**
+     * Create a string that will display the number of bears, fish and null nodes in the list.
+     * int s - step number
+     */
     public String summary(int s) {
-        /**
-         * Create a string that will display the number of bears, fish and null nodes in the list.
-         * int s - step number
-         */
         int numBears = 0;
         int numFish = 0;
         int numNull = 0;
@@ -281,7 +280,9 @@ public class RiverList<E> {
     // MAIN --------------------------------------------------
     public static void main(String[] args) {
 
-        RiverList<String> snakeRiver = new RiverList<>(20);
+        System.out.println("\nWelcome to the river ecosystem simulator.");
+
+        RiverList<String> snakeRiver = new RiverList<>(500);
         snakeRiver.initialize("bear", "fish");
         System.out.println(snakeRiver);
 
@@ -291,6 +292,9 @@ public class RiverList<E> {
             snakeRiver.iterate();
             System.out.println(snakeRiver.summary(step));
         }
+
+        System.out.println("The bears have taken over the ecosystem.  It took them " + step + " rounds.");
+        System.out.println("Good job bears, sleep well and wake up refreshed.");
 
 
 
