@@ -29,65 +29,98 @@ public class River3 {
         return size;
     }
 
+    /**
+     * INITIALIZE
+     * Randomly fill the doublylinkedlist with bears, fish and null nodes.
+     * @param b = Animal3 bear
+     * @param f = Animal3 fish
+     */
     public void initialize(Animal3 b, Animal3 f) {
-        /*
-         * Randomly fill with bears, fish, or nothing (null)
-         */
-        Random rand = new Random();
-        int numBears = 0;  // counts number of bears
 
-        for (int i = 0; i < size; i++) {
-            int rand_num = rand.nextInt(3);
-            if (rand_num == 1) { animals.addFirst(b); }
-            else if (rand_num == 2) { animals.addFirst(f); }
-            else { animals.addFirst(null); }
-        }
+//        Random rand = new Random();
+//        int numBears = 0;  // counts number of bears
+//
+//        for (int i = 0; i < size; i++) {
+//            int rand_num = rand.nextInt(3);  // create a random number 0-2
+//            if (rand_num == 1) { animals.addFirst(b); }  // populate with a bear
+//            else if (rand_num == 2) { animals.addFirst(f); }  // populate with a fish
+//            else { animals.addFirst(null); }  // populate with null
+//        }
 
-
-        // randomly assign a number 0-2
-        // populate with a bear
-        // populate with a fish
-
-        // Loop to count the number of bears.
-
-        // If there are less than 2 bears, manually add.  Otherwise, there will be an infinite loop.
+        //FOR TESTING
+        animals.addFirst(b);
+        animals.addFirst(f);
 
 
     }
 
-    public void iterate(River3 a) {
-        /*
-         * Each iteration should determine if the bears and fish move,
-         * and which direction they move, left or right.
-         */
+    /**
+     * ITERATE
+     * Move through the doubly linked list.
+     * Each iteration will determine if each bear or fish node moves and which direction they move, left or right.
+     * Null nodes do not move.
+     *
+     */
+    public void iterate() {
         Random rand = new Random();
+
 
         // reset movement flags
 
+        // create node that will be used to walk through the list
+        // start at the first node after the header.
+        DoublyLinkedList3.Node<Animal3> walk = animals.header.getNext();
+
         // randomly attempt to move right, left, or stay on each cell in the array.
-
-        // only move if the cell contains an animal
-        // only move if the animal has yet to move
-        // randomly assign a number 0-2
-
+//        for (int i = 0; i < animals.size(); i++) {
+//            if (walk != null) {  // only move if the cell contains animal
+//                int rand_num = rand.nextInt(2);
+//                if ((rand_num == 0) & (walk.getPrev() != animals.header)) { a.moveLeft(walk); } // move left if not first
+//                else if ((rand_num == 1) & (walk.getNext() != animals.trailer)) { a.moveRight(); } // move right if not last
+//            }
+//            walk = walk.getNext();
+//        }
+        walk = animals.header.getNext();
+        if (walk != null) {
+            System.out.println("node = " + walk.getElement());
+            walk = walk.getNext();
+        }
+        System.out.println("node = " + walk.getElement().getSpecies());
+        this.moveLeft(walk);
     }
 
-    public void moveLeft() {
-        /*
-         * Move the animal left one space.
-         * First cell does not move
-         * If the animals are the same - original cell = null, new cell = animal, replace a null cell with animal
-         * If bear moves to fish - original cell = null, new cell = bear, remove fish
-         * If animal moves to null - original cell = null, new cell = animal
-         */
-        // if index is not zero
+
+
+    /**
+     * MOVE LEFT
+     * Move the animal left one space.
+     * First cell does not move.
+     * If the animals are the same - original cell = null, new cell = animal, replace an existing null with animal
+     * If bear moves to fish - original cell = null, new cell = bear, remove fish
+     * If fish moves to bear - original cell = null
+     * If animal moves to null - original cell = null, new cell = animal
+     */
+    public void moveLeft(DoublyLinkedList3.Node w) {
+
+        System.out.println("MoveLEft");
         // bear or fish moves to null
+        if (w.getPrev().getElement() == null) {
+            w.getPrev().setElement(w.getElement());
+        }
 
         // animals are the same
 
-        // fish moves to bear or bear moves to fish
+        // bear moves to fish
+        System.out.println(w);
+        if ((w.getElement() == "bear") & (w.getPrev().getElement() == "fish")) {
+            w.getPrev().setElement(w.getElement());
+            w.setElement(null);
+        }
+        // fish moves to bear
+        else if ((w.getElement() == "fish") & (w.getPrev().getElement() == "bear")) {
+            w.setElement(null);
+        }
 
-        // bear and fish collide
 
     }
 
@@ -137,26 +170,26 @@ public class River3 {
          */
     }
 
-//    public String summary(int s) {
-//        int bears = 0;
-//        int fish = 0;
-//        int empty = 0;
-//
-//        for (int i = 0; i < size; i++) {
-//
-//        }
-//
-//        String r = "-----------------------------\n";
-//        r += "| Step Number : ";
-//        r += s + "\t\t\t|\n";
-//        r += "-----------------------------\n";
-//        r += "| There are currently:\t\t|\n";
-//        r += "| " + fish + " fish\t\t\t\t\t|\n";
-//        r += "| " + bears + " bear(s)\t\t\t\t|\n";
-//        r += "| " + empty + " null cell(s)\t\t\t|\n";
-//        r += "-----------------------------\n";
-//        return r;
-//    }
+    public String summary(int s) {
+        int bears = 0;
+        int fish = 0;
+        int empty = 0;
+
+        for (int i = 0; i < size; i++) {
+
+        }
+
+        String r = "-----------------------------\n";
+        r += "| Step Number : ";
+        r += s + "\t\t\t|\n";
+        r += "-----------------------------\n";
+        r += "| There are currently:\t\t|\n";
+        r += "| " + fish + " fish\t\t\t\t\t|\n";
+        r += "| " + bears + " bear(s)\t\t\t\t|\n";
+        r += "| " + empty + " null cell(s)\t\t\t|\n";
+        r += "-----------------------------\n";
+        return r;
+    }
 
     public String toString() {
         /*
@@ -164,7 +197,7 @@ public class River3 {
          * in the river array.
          */
 
-        String sb = "test";
+        String sb = "";
         DoublyLinkedList3.Node<Animal3> walk = animals.header.getNext();
         int num = 1;
         for (int i = 0; i < animals.size(); i++) {
@@ -198,17 +231,18 @@ public class River3 {
 
         // Initialize - populate river array
         snakeRiver.initialize(bear, fish);
+        System.out.println(snakeRiver);
 
         // Iteration - Run until the river is full of bears
         int n = 0;
-//        do {
-//            n++;
-//            portneuf.iterate(portneuf);
-//            System.out.println(portneuf.summary(n));
-//        } while (!portneuf.allBears());
+        do {
+            n++;
+            snakeRiver.iterate();
+            System.out.println(snakeRiver);
+        } while (n != 1);
 
         // Program completion output
-        System.out.println(snakeRiver);
+
 
 
     }

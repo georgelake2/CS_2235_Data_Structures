@@ -29,7 +29,7 @@ public class DoublyLinkedList3<E> {
 
         public void setNext(Node<E> n) { next = n; }
 
-        public void setElement(Node<E> e) {}
+        public void setElement(E e) { element = e; }
     } //----------- end of nested Node class -----------
 
     // instance variables of the DoublyLinkedList ---------------
