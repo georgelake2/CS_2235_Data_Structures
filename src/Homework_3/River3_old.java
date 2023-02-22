@@ -2,7 +2,7 @@ package Homework_3;
 
 import java.util.Random;
 
-public class RiverList<E> {
+public class River3_old<E> {
 
     // NESTED NODE CLASS ---------------------------------
     // This nested class takes the place of the Animal Class that was in HW2
@@ -37,7 +37,7 @@ public class RiverList<E> {
     private int setSize;
 
     // Constructors
-    public RiverList(int n) {
+    public River3_old(int n) {
         header = new Node<>(null, null, null);
         trailer = new Node<>(null, header, null);
         header.setNext(trailer);
@@ -282,7 +282,7 @@ public class RiverList<E> {
 
         System.out.println("\nWelcome to the river ecosystem simulator.");
 
-        RiverList<String> snakeRiver = new RiverList<>(500);
+        River3_old<String> snakeRiver = new River3_old<>(500);
         snakeRiver.initialize("bear", "fish");
         System.out.println(snakeRiver);
 
