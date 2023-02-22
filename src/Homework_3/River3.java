@@ -1,12 +1,11 @@
 /**
  *  George Lake
- *  Homework 2
+ *  Homework 3
  *  CS 2235, Dr. Leslie Kerby
  *
  *  contains MAIN
  */
 package Homework_3;
-import Homework_2.Animal;
 
 import java.util.Random;
 
@@ -14,7 +13,6 @@ public class River3 {
     // Instance variables -------------------------------
     private int size = 0;
     private DoublyLinkedList3<Animal3> animals;
-
 
     // Constructors -------------------------------------
     public River3(int n) {
@@ -25,21 +23,24 @@ public class River3 {
 
     // Methods ------------------------------------------
     public int getSize() {
-        /**
+        /*
          * get the size of the river
          */
         return size;
     }
 
     public void initialize(Animal3 b, Animal3 f) {
-        /**
+        /*
          * Randomly fill with bears, fish, or nothing (null)
          */
         Random rand = new Random();
         int numBears = 0;  // counts number of bears
 
         for (int i = 0; i < size; i++) {
-            animals.addFirst(b);
+            int rand_num = rand.nextInt(3);
+            if (rand_num == 1) { animals.addFirst(b); }
+            else if (rand_num == 2) { animals.addFirst(f); }
+            else { animals.addFirst(null); }
         }
 
 
@@ -55,7 +56,7 @@ public class River3 {
     }
 
     public void iterate(River3 a) {
-        /**
+        /*
          * Each iteration should determine if the bears and fish move,
          * and which direction they move, left or right.
          */
@@ -72,7 +73,7 @@ public class River3 {
     }
 
     public void moveLeft() {
-        /**
+        /*
          * Move the animal left one space.
          * First cell does not move
          * If the animals are the same - original cell = null, new cell = animal, replace a null cell with animal
@@ -91,7 +92,7 @@ public class River3 {
     }
 
     public void moveRight() {
-        /**
+        /*
          * Move the animal right one space.
          * Last cell does not move
          * If the animals are the same - original cell = null, new cell = animal, replace a null cell with animal
@@ -117,21 +118,21 @@ public class River3 {
 
     }
 
-    public void createNew(Animal a) {
-        /**
+    public void createNew() {
+        /*
          *  Creates a new animal (bear or fish) and then moves them to a null cell.
          */
 
     }
 
     public void addAnimal(int a) {
-        /**
+        /*
          * Adds a bear to a cell containing a fish if they collide.
          */
     }
 
     public void removeAnimal(int a) {
-        /**
+        /*
          * Removes a fish from the array after it encountered a bear.
          */
     }
@@ -157,18 +158,27 @@ public class River3 {
 //        return r;
 //    }
 
-//    public String toString() {
-//        /**
-//         * Create a summary string displaying the number of bears, fish, and empty spots
-//         * in the river array.
-//         */
-//
-//        String sb = "";
-//        return sb;
-//    }
+    public String toString() {
+        /*
+         * Create a summary string displaying the number of bears, fish, and empty spots
+         * in the river array.
+         */
+
+        String sb = "test";
+        DoublyLinkedList3.Node<Animal3> walk = animals.header.getNext();
+        int num = 1;
+        for (int i = 0; i < animals.size(); i++) {
+            if (walk.getElement() != null) {
+                sb += num + ". " + walk.getElement().getSpecies() + "\n";
+            } else { sb += num + ". null \n"; }
+            walk = walk.getNext();
+            num ++;
+        }
+        return sb;
+    }
 
     public boolean allBears() {
-        /**
+        /*
          * Search the river array
          * Return true if array contains all bears
          * otherwise return false.
@@ -198,10 +208,7 @@ public class River3 {
 //        } while (!portneuf.allBears());
 
         // Program completion output
-        String test = new String();
-        test = snakeRiver.animals.toString();  // gets string from DoublyLinkedList
-        System.out.println(test);
-
+        System.out.println(snakeRiver);
 
 
     }

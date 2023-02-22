@@ -1,7 +1,6 @@
-package Homework_3;
+package TEST;
 
-public class DoublyLinkedList3<E> {
-
+public class DoubListT<E> {
     //---------------- nested Node class ----------------
     public static class Node<E> {
         // State -------------------------------
@@ -17,19 +16,25 @@ public class DoublyLinkedList3<E> {
         }
 
         // Methods - Accessor --------------------------
-        public E getElement() {
-            return element; }
-
-        public Node<E> getPrev() { return prev; }
-
-        public Node<E> getNext() { return next; }
+        public E getElement() { return element; }
+        public Node<E> getPrev() {
+            return prev;
+        }
+        public Node<E> getNext() {
+            return next;
+        }
 
         // Methods - Update --------------------------
-        public void setPrev(Node<E> p) { prev = p; }
+        public void setPrev(Node<E> p) {
+            prev = p;
+        }
 
-        public void setNext(Node<E> n) { next = n; }
+        public void setNext(Node<E> n) {
+            next = n;
+        }
 
-        public void setElement(Node<E> e) {}
+        public void setElement(Node<E> e) {
+        }
     } //----------- end of nested Node class -----------
 
     // instance variables of the DoublyLinkedList ---------------
@@ -38,16 +43,20 @@ public class DoublyLinkedList3<E> {
     private int size = 0;                      // number of elements in the list
 
     // Constructors -----------------------------------------
-    public DoublyLinkedList3() {
+    public DoubListT() {
         header = new Node<>(null, null, null);  // create header
         trailer = new Node<>(null, header, null);  // trailer is preceded by header
         header.setNext(trailer);                         // header is followed by trailer
     }
 
     // Methods - Accessor -------------------------------
-    public int size() { return size; }
+    public int size() {
+        return size;
+    }
 
-    public boolean isEmpty() { return size == 0; }
+    public boolean isEmpty() {
+        return size == 0;
+    }
 
     public E first() {
         if (isEmpty()) return null;
@@ -95,23 +104,4 @@ public class DoublyLinkedList3<E> {
         size--;
         return node.getElement();
     }
-
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-//        Node<E> walk = header.getNext();
-//        int num = 0;
-//        while (walk != trailer) {
-//            num ++;
-//            sb.append(num + ": ");
-//            sb.append(walk.getElement());
-//            walk = walk.getNext();
-//            if (walk != trailer)
-//                sb.append("\n");
-//        }
-//        sb.append("\n");
-//
-        return sb.toString();
-    }
-
-
 }
