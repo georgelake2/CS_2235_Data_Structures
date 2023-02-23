@@ -1,7 +1,13 @@
+/**
+ *  George Lake
+ *  Homework 3
+ *  CS 2235, Dr. Leslie Kerby
+ *
+ *  This class contains the doubly linked list that will be used by the River3 class.
+ */
 package Homework_3;
 
 public class DoublyLinkedList3<E> {
-
     //---------------- nested Node class ----------------
     public static class Node<E> {
         // State -------------------------------
@@ -17,18 +23,13 @@ public class DoublyLinkedList3<E> {
         }
 
         // Methods - Accessor --------------------------
-        public E getElement() {
-            return element; }
-
+        public E getElement() { return element; }
         public Node<E> getPrev() { return prev; }
-
         public Node<E> getNext() { return next; }
 
         // Methods - Update --------------------------
         public void setPrev(Node<E> p) { prev = p; }
-
         public void setNext(Node<E> n) { next = n; }
-
         public void setElement(E e) { element = e; }
     } //----------- end of nested Node class -----------
 
@@ -98,6 +99,8 @@ public class DoublyLinkedList3<E> {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        // CODE REMOVED, STRING WILL BE CREATED IN THE RIVER3 CLASS
+
 //        Node<E> walk = header.getNext();
 //        int num = 0;
 //        while (walk != trailer) {
@@ -110,7 +113,7 @@ public class DoublyLinkedList3<E> {
 //        }
 //        sb.append("\n");
 //
-        return sb.toString();
+        return null;
     }
 
 
