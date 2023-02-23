@@ -37,22 +37,15 @@ public class River3 {
      */
     public void initialize(Animal3 b, Animal3 f) {
 
-//        Random rand = new Random();
-//        int numBears = 0;  // counts number of bears
-//
-//        for (int i = 0; i < size; i++) {
-//            int rand_num = rand.nextInt(3);  // create a random number 0-2
-//            if (rand_num == 1) { animals.addFirst(b); }  // populate with a bear
-//            else if (rand_num == 2) { animals.addFirst(f); }  // populate with a fish
-//            else { animals.addFirst(null); }  // populate with null
-//        }
+        Random rand = new Random();
+        int numBears = 0;  // counts number of bears
 
-        //FOR TESTING
-        animals.addFirst(b);
-        animals.addFirst(f);
-
-
-    }
+        for (int i = 0; i < size; i++) {
+            int rand_num = rand.nextInt(3);  // create a random number 0-2
+            if (rand_num == 1) { animals.addFirst(b); }  // populate with a bear
+            else if (rand_num == 2) { animals.addFirst(f); }  // populate with a fish
+            else { animals.addFirst(null); }  // populate with null
+        } }
 
     /**
      * ITERATE
@@ -72,23 +65,14 @@ public class River3 {
         DoublyLinkedList3.Node<Animal3> walk = animals.header.getNext();
 
         // randomly attempt to move right, left, or stay on each cell in the array.
-//        for (int i = 0; i < animals.size(); i++) {
-//            if (walk != null) {  // only move if the cell contains animal
-//                int rand_num = rand.nextInt(2);
-//                if ((rand_num == 0) & (walk.getPrev() != animals.header)) { a.moveLeft(walk); } // move left if not first
-//                else if ((rand_num == 1) & (walk.getNext() != animals.trailer)) { a.moveRight(); } // move right if not last
-//            }
-//            walk = walk.getNext();
-//        }
-        walk = animals.header.getNext();
-        if (walk != null) {
-            System.out.println("node = " + walk.getElement());
+        for (int i = 0; i < animals.size(); i++) {
+            if (walk != null) {  // only move if the cell contains animal
+                int rand_num = rand.nextInt(2);
+                if ((rand_num == 0) & (walk.getPrev() != animals.header)) { this.moveLeft(walk); } // move left if not first
+                else if ((rand_num == 1) & (walk.getNext() != animals.trailer)) { this.moveRight(walk); } // move right if not last
+            }
             walk = walk.getNext();
-        }
-        System.out.println("node = " + walk.getElement().getSpecies());
-        this.moveLeft(walk);
-    }
-
+        } }
 
 
     /**
@@ -100,31 +84,31 @@ public class River3 {
      * If fish moves to bear - original cell = null
      * If animal moves to null - original cell = null, new cell = animal
      */
-    public void moveLeft(DoublyLinkedList3.Node w) {
-
-        System.out.println("MoveLEft");
+    public void moveLeft(DoublyLinkedList3.Node<Animal3> w) {
         // bear or fish moves to null
         if (w.getPrev().getElement() == null) {
             w.getPrev().setElement(w.getElement());
         }
-
         // animals are the same
-
+        else if (w.getPrev().getElement() == w.getElement()) {
+            this.createNew(w.getElement());
+            w.setElement(null);
+        }
         // bear moves to fish
-        System.out.println(w);
-        if ((w.getElement() == "bear") & (w.getPrev().getElement() == "fish")) {
+        else if ((w.getElement().getSpecies() == "bear") & (w.getPrev().getElement().getSpecies() == "fish")) {
             w.getPrev().setElement(w.getElement());
             w.setElement(null);
         }
         // fish moves to bear
-        else if ((w.getElement() == "fish") & (w.getPrev().getElement() == "bear")) {
+        else if ((w.getElement().getSpecies() == "fish") & (w.getPrev().getElement().getSpecies() == "bear")) {
             w.setElement(null);
-        }
+        } }
 
-
-    }
-
-    public void moveRight() {
+    /**
+     * MOVE RIGHT
+     *
+     */
+    public void moveRight(DoublyLinkedList3.Node<Animal3> w) {
         /*
          * Move the animal right one space.
          * Last cell does not move
@@ -138,45 +122,70 @@ public class River3 {
          * Do not trigger if a fish moves to bear.
          * Do not trigger flag if a new animal is created
          */
-        // if index is not the last cell
-        // new cell is null
-        // animal has moved this round
-
+        // bear or fish moves to null
+        if (w.getNext().getElement() == null) {
+            w.getNext().setElement(w.getElement());
+        }
         // animals are the same
-
+        else if (w.getNext().getElement() == w.getElement()) {
+            this.createNew(w.getElement());
+            w.setElement(null);
+        }
         // bear moves to fish
-        // the bear moved this round
-
+        else if ((w.getElement().getSpecies() == "bear") & (w.getNext().getElement().getSpecies() == "fish")) {
+            w.getNext().setElement(w.getElement());
+            w.setElement(null);
+        }
         // fish moves to bear
+        else if ((w.getElement().getSpecies() == "fish") & (w.getNext().getElement().getSpecies() == "bear")) {
+            w.setElement(null);
+        } }
 
-    }
+    /**
+     * CREATE NEW
+     * Search through the list and replace the first null cell with the provided animal.
+     * @param a = Animal that will replace a null cell.
+     */
+    public void createNew(Animal3 a) {
+        DoublyLinkedList3.Node<Animal3> walk = animals.header.getNext();
+        for (int i = 0; i < animals.size(); i++) {
+            if (walk.getElement() == null) {
+                walk.setElement(a);
+                break;
+            }
+            walk = walk.getNext();
+        } }
 
-    public void createNew() {
-        /*
-         *  Creates a new animal (bear or fish) and then moves them to a null cell.
-         */
-
-    }
-
+    /**
+     *
+     * @param a
+     */
     public void addAnimal(int a) {
-        /*
-         * Adds a bear to a cell containing a fish if they collide.
-         */
+
     }
 
+    /**
+     *
+     * @param a
+     */
     public void removeAnimal(int a) {
-        /*
-         * Removes a fish from the array after it encountered a bear.
-         */
+
     }
 
+    /**
+     *
+     * @param s
+     * @return
+     */
     public String summary(int s) {
         int bears = 0;
         int fish = 0;
         int empty = 0;
-
-        for (int i = 0; i < size; i++) {
-
+        DoublyLinkedList3.Node<Animal3> walk = animals.header.getNext();
+        for (int i = 0; i < animals.size(); i++) {
+            if (walk.getElement().getSpecies() == "bears") { bears ++; }
+            else if (walk.getElement().getSpecies() == "fish") { fish ++; }
+            else { empty ++; }
         }
 
         String r = "-----------------------------\n";
@@ -191,11 +200,11 @@ public class River3 {
         return r;
     }
 
+    /**
+     *
+     * @return
+     */
     public String toString() {
-        /*
-         * Create a summary string displaying the number of bears, fish, and empty spots
-         * in the river array.
-         */
 
         String sb = "";
         DoublyLinkedList3.Node<Animal3> walk = animals.header.getNext();
@@ -210,17 +219,23 @@ public class River3 {
         return sb;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean allBears() {
         /*
          * Search the river array
          * Return true if array contains all bears
          * otherwise return false.
          */
+        DoublyLinkedList3.Node<Animal3> walk = animals.header.getNext();
         int numBears = 0;
-        for (int i = 0; i < size; i++) {
-
+        for (int i = 0; i < animals.size(); i++) {
+            if (walk.getElement().getSpecies() == "bear") { numBears++; }
+            walk = walk.getNext();
         }
-        return numBears == size;
+        return numBears == animals.size();
     }
 
     // MAIN ----------------------------------------------------
@@ -238,8 +253,8 @@ public class River3 {
         do {
             n++;
             snakeRiver.iterate();
-            System.out.println(snakeRiver);
-        } while (n != 1);
+            System.out.println(snakeRiver.summary(n));
+        } while (!snakeRiver.allBears());
 
         // Program completion output
 
