@@ -6,18 +6,18 @@
  *
  *  contains MAIN
  */
-package Homework_3;
+package Homework_4;
 
 import java.util.Random;
 
-public class River3 {
+public class River4_DLL {
     // Instance variables -------------------------------
     private int size = 0;
-    private DoublyLinkedList3<Animal3> animals;
+    private DoublyLinkedList4<Animal4> animals;
 
     // Constructors -------------------------------------
-    public River3(int n) {
-        animals = new DoublyLinkedList3<Animal3>();
+    public River4_DLL(int n) {
+        animals = new DoublyLinkedList4<Animal4>();
         size = n;
     }
 
@@ -35,7 +35,7 @@ public class River3 {
      * @param b = Animal3 bear
      * @param f = Animal3 fish
      */
-    public void initialize(Animal3 b, Animal3 f) {
+    public void initialize(Animal4 b, Animal4 f) {
         Random rand = new Random();
         int numBears = 0;  // counts number of bears
         for (int i = 0; i < size; i++) {
@@ -54,7 +54,7 @@ public class River3 {
     public void iterate() {
         Random rand = new Random();
         // Create a node that will be used to walk through the list.
-        DoublyLinkedList3.Node<Animal3> walk = animals.header.getNext();
+        DoublyLinkedList4.Node<Animal4> walk = animals.header.getNext();
 
         // reset movement flags
         for (int i = 0; i < animals.size(); i++) {
@@ -83,7 +83,7 @@ public class River3 {
      * If fish moves to bear - original cell = null
      * If animal moves to null - original cell = null, new cell = animal
      */
-    public void moveLeft(DoublyLinkedList3.Node<Animal3> w) {
+    public void moveLeft(DoublyLinkedList4.Node<Animal4> w) {
         // bear or fish moves to null
         if (w.getPrev().getElement() == null) {
             w.getPrev().setElement(w.getElement());
@@ -117,7 +117,7 @@ public class River3 {
      * Do not trigger if a fish moves to bear.
      * Do not trigger if a new animal is created.
      */
-    public void moveRight(DoublyLinkedList3.Node<Animal3> w) {
+    public void moveRight(DoublyLinkedList4.Node<Animal4> w) {
         // bear or fish moves to null
         if (w.getNext().getElement() == null) {
             w.getNext().setElement(w.getElement());
@@ -144,8 +144,8 @@ public class River3 {
      * Search through the list and replace the first null cell with the provided animal.
      * @param a = Animal that will replace a null cell.
      */
-    public void createNew(Animal3 a) {
-        DoublyLinkedList3.Node<Animal3> walk = animals.header.getNext();
+    public void createNew(Animal4 a) {
+        DoublyLinkedList4.Node<Animal4> walk = animals.header.getNext();
         for (int i = 0; i < animals.size(); i++) {
             if (walk.getElement() == null) {
                 walk.setElement(a);
@@ -178,7 +178,7 @@ public class River3 {
         int bears = 0;
         int fish = 0;
         int empty = 0;
-        DoublyLinkedList3.Node<Animal3> walk = animals.header.getNext();
+        DoublyLinkedList4.Node<Animal4> walk = animals.header.getNext();
         // count number of bears, fish, null
         for (int i = 0; i < animals.size(); i++) {
             if (walk.getElement() == null) { empty ++; }
@@ -212,7 +212,7 @@ public class River3 {
      * @return = True - when river contains all bears.
      */
     public boolean allBears() {
-        DoublyLinkedList3.Node<Animal3> walk = animals.header.getNext();
+        DoublyLinkedList4.Node<Animal4> walk = animals.header.getNext();
         int numBears = 0;
         for (int i = 0; i < animals.size(); i++) {
             if (walk.getElement() != null) {
@@ -225,45 +225,24 @@ public class River3 {
 
     // MAIN ----------------------------------------------------
     public static void main(String[] args) {
-        // Experimental Computation Time
-        int trials = 100; // number of times to run the program
-        long avg_time;
-        long startTime;
-        long endTime;
+        River4_DLL snakeRiver = new River4_DLL(500);
+        Animal4 bear = new Animal4("bear");
+        Animal4 fish = new Animal4("fish");
 
-        // START COMPUTATION TIMER
-        // Run COMPUTATION TIMER "trials" number of times
-        startTime = System.currentTimeMillis();
+        // Initialize - populate river array
+        snakeRiver.initialize(bear, fish);
 
-        for (int i = 0; i < trials; i++) {
-            // Create specific river and animals
-            River3 snakeRiver = new River3(5000);
-            Animal3 bear = new Animal3("bear");
-            Animal3 fish = new Animal3("fish");
+        // Iteration - Run until the river is full of bears
+        int step = 0;
+        do {
+            step ++;
+            snakeRiver.iterate();
+            System.out.println(snakeRiver.summary(step));
+        } while (!snakeRiver.allBears());
 
-            // Initialize - Populate River Array
-            snakeRiver.initialize(bear, fish);
-
-            // Iteration - Run until the river is full of bears
-            int step = 0;
-            do {
-                step ++;
-                snakeRiver.iterate();
-                //System.out.println(snakeRiver.summary(step));  // Not used for time calculation
-            } while (!snakeRiver.allBears());
-
-            // Program completion output - Not Used for time calculation
-            System.out.println("The bears have taken over the Snake River ecosystem.  It took them " + step + " rounds.");
-            //System.out.println("Good job bears, sleep well and wake up refreshed.");
-        }
-
-        // Finish Experimental Computation Time
-        endTime = System.currentTimeMillis();
-        avg_time = ((endTime - startTime) / trials);
-        System.out.println();
-        System.out.println("It took an average " + avg_time + "ms, to run the program.");
-
-
+        // Program completion output
+        System.out.println("The bears have taken over the Snake River ecosystem.  It took them " + step + " rounds.");
+        System.out.println("Good job bears, sleep well and wake up refreshed.");
 
     }
 }
