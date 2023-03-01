@@ -218,25 +218,46 @@ public class River4_Array {
 
     // MAIN ----------------------------------------------------
     public static void main(String[] args) {
-        River4_Array portneuf = new River4_Array(500);
-        Animal4 bear = new Animal4("bear");
-        Animal4 fish = new Animal4("fish");
+        // Experimental Computation Time - Initialize
+        int trials = 1;
+        long startTime;
+        long endTime;
+        long avgTime;
+        int arraySize = 320000;
 
-        // Initialize - populate river array
-        portneuf.initialize(bear, fish);
+        // Experimental Computation Time - Start
+        startTime = System.currentTimeMillis();
 
-        // Iteration - Run until the river is full of bears
-        int n = 0;
-        do {
-            n++;
-            portneuf.iterate(portneuf);
-            System.out.println(portneuf.summary(n));
-        } while (!portneuf.allBears());
+        for (int i = 0; i < trials; i++ ) {
+            // Setup river and two animals
+            River4_Array portneuf = new River4_Array(arraySize);
+            Animal4 bear = new Animal4("bear");
+            Animal4 fish = new Animal4("fish");
 
-        // Program completion output
-        if (portneuf.allBears()) {
-            System.out.println(" THE BEARS HAVE WON!!! ");
-            System.out.println(" It took an excess of " + (n-1) + " rounds.");
-            System.out.println(" ... it would have been faster if the bears were lions from Detroit ... ");}
+            // Initialize - populate river array
+            portneuf.initialize(bear, fish);
+
+            // Iteration - Run until the river is full of bears
+            int n = 0;
+            do {
+                n++;
+                portneuf.iterate(portneuf);
+                //System.out.println(portneuf.summary(n)); // NOT USED FOR EXPERIMENTAL COMPUTATIONAL TIME
+            } while (!portneuf.allBears());
+
+            // Program completion output - NOT USED FOR EXPERIMENTAL COMPUTATIONAL TIME
+//            if (portneuf.allBears()) {
+//                System.out.println(" THE BEARS HAVE WON!!! ");
+//                System.out.println(" It took an excess of " + (n - 1) + " rounds.");
+//                System.out.println(" ... it would have been faster if the bears were lions from Detroit ... ");
+//            }
+        }
+        // Experimental Computational Time - End
+        endTime = System.currentTimeMillis();
+
+        // Experimental Computation Time - Calculate
+        avgTime = (endTime - startTime) / trials;
+        System.out.println("Experimental Computational time: n = " + arraySize + ", average time = " + avgTime + " ms");
+
     }
 }
