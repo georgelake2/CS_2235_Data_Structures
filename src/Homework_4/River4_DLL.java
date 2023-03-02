@@ -225,24 +225,43 @@ public class River4_DLL {
 
     // MAIN ----------------------------------------------------
     public static void main(String[] args) {
-        River4_DLL snakeRiver = new River4_DLL(500);
-        Animal4 bear = new Animal4("bear");
-        Animal4 fish = new Animal4("fish");
+        // Experimental Computation Time - Initialize
+        int trials = 10;
+        long startTime;
+        long endTime;
+        long avgTime;
+        int listSize = 160000;
 
-        // Initialize - populate river array
-        snakeRiver.initialize(bear, fish);
+        // Experimental Computation Time - Start
+        startTime = System.currentTimeMillis();
 
-        // Iteration - Run until the river is full of bears
-        int step = 0;
-        do {
-            step ++;
-            snakeRiver.iterate();
-            System.out.println(snakeRiver.summary(step));
-        } while (!snakeRiver.allBears());
+        for (int i = 0; i < trials; i++) {
+            // Setup river and two animals
+            River4_DLL snakeRiver = new River4_DLL(listSize);
+            Animal4 bear = new Animal4("bear");
+            Animal4 fish = new Animal4("fish");
 
-        // Program completion output
-        System.out.println("The bears have taken over the Snake River ecosystem.  It took them " + step + " rounds.");
-        System.out.println("Good job bears, sleep well and wake up refreshed.");
+            // Initialize - populate river array
+            snakeRiver.initialize(bear, fish);
+
+            // Iteration - Run until the river is full of bears
+            int step = 0;
+            do {
+                step++;
+                snakeRiver.iterate();
+                //System.out.println(snakeRiver.summary(step));
+            } while (!snakeRiver.allBears());
+
+            // Program completion output - NOT USED FOR EXPERIMENTAL COMPUTATIONAL TIME
+            //System.out.println("The bears have taken over the Snake River ecosystem.  It took them " + step + " rounds.");
+            //System.out.println("Good job bears, sleep well and wake up refreshed.");
+        }
+        // Experimental Computational Time - End
+        endTime = System.currentTimeMillis();
+
+        // Experimental Computation Time - Calculate
+        avgTime = (endTime - startTime) / trials;
+        System.out.println("Experimental Computational time: n = " + listSize + ", average time = " + avgTime + " ms");
 
     }
 }
