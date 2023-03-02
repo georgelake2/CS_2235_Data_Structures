@@ -219,11 +219,11 @@ public class River4_Array {
     // MAIN ----------------------------------------------------
     public static void main(String[] args) {
         // Experimental Computation Time - Initialize
-        int trials = 1;
+        int trials = 10;
         long startTime;
         long endTime;
         long avgTime;
-        int arraySize = 320000;
+        int arraySize = 1000000;
 
         // Experimental Computation Time - Start
         startTime = System.currentTimeMillis();
@@ -238,12 +238,12 @@ public class River4_Array {
             portneuf.initialize(bear, fish);
 
             // Iteration - Run until the river is full of bears
-            int n = 0;
-            do {
-                n++;
-                portneuf.iterate(portneuf);
-                //System.out.println(portneuf.summary(n)); // NOT USED FOR EXPERIMENTAL COMPUTATIONAL TIME
-            } while (!portneuf.allBears());
+//            int n = 0;
+//            do {
+//                n++;
+//                portneuf.iterate(portneuf);
+//                //System.out.println(portneuf.summary(n)); // NOT USED FOR EXPERIMENTAL COMPUTATIONAL TIME
+//            } while (!portneuf.allBears());
 
             // Program completion output - NOT USED FOR EXPERIMENTAL COMPUTATIONAL TIME
 //            if (portneuf.allBears()) {
@@ -257,7 +257,7 @@ public class River4_Array {
 
         // Experimental Computation Time - Calculate
         avgTime = (endTime - startTime) / trials;
-        System.out.println("Experimental Computational time: n = " + arraySize + ", average time = " + avgTime + " ms");
+        System.out.println("Experimental Computational time (Array): n = " + arraySize + ", average time = " + avgTime + " ms");
 
     }
 }

@@ -230,7 +230,7 @@ public class River4_DLL {
         long startTime;
         long endTime;
         long avgTime;
-        int listSize = 160000;
+        int listSize = 1000000;
 
         // Experimental Computation Time - Start
         startTime = System.currentTimeMillis();
@@ -245,12 +245,12 @@ public class River4_DLL {
             snakeRiver.initialize(bear, fish);
 
             // Iteration - Run until the river is full of bears
-            int step = 0;
-            do {
-                step++;
-                snakeRiver.iterate();
-                //System.out.println(snakeRiver.summary(step));
-            } while (!snakeRiver.allBears());
+//            int step = 0;
+//            do {
+//                step++;
+//                snakeRiver.iterate();
+//                //System.out.println(snakeRiver.summary(step));
+//            } while (!snakeRiver.allBears());
 
             // Program completion output - NOT USED FOR EXPERIMENTAL COMPUTATIONAL TIME
             //System.out.println("The bears have taken over the Snake River ecosystem.  It took them " + step + " rounds.");
@@ -261,7 +261,7 @@ public class River4_DLL {
 
         // Experimental Computation Time - Calculate
         avgTime = (endTime - startTime) / trials;
-        System.out.println("Experimental Computational time: n = " + listSize + ", average time = " + avgTime + " ms");
+        System.out.println("Experimental Computational time (DLL): n = " + listSize + ", average time = " + avgTime + " ms");
 
     }
 }
