@@ -226,12 +226,11 @@ public class River4_DLL {
     // MAIN ----------------------------------------------------
     public static void main(String[] args) {
         // Experimental Computation Time - Initialize
-        int trials = 1;
+        int trials = 10;
         long startTime;
         long endTime;
         long avgTime;
-        int listSize = 320000;
-        System.out.println("current time = " + System.currentTimeMillis());
+        int listSize = 1280000;
 
         // Experimental Computation Time - Start
         startTime = System.currentTimeMillis();
@@ -246,12 +245,12 @@ public class River4_DLL {
             snakeRiver.initialize(bear, fish);
 
             // Iteration - Run until the river is full of bears
-            int step = 0;
-            do {
-                step++;
-                snakeRiver.iterate();
-                //System.out.println(snakeRiver.summary(step));
-            } while (!snakeRiver.allBears());
+//            int step = 0;
+//            do {
+//                step++;
+//                snakeRiver.iterate();
+//                //System.out.println(snakeRiver.summary(step));
+//            } while (!snakeRiver.allBears());
 
             // Program completion output - NOT USED FOR EXPERIMENTAL COMPUTATIONAL TIME
             //System.out.println("The bears have taken over the Snake River ecosystem.  It took them " + step + " rounds.");
