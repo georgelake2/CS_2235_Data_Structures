@@ -230,7 +230,7 @@ public class River4_DLL {
         long startTime;
         long endTime;
         long avgTime;
-        int listSize = 1280000;
+        int listSize = 5000;
 
         // Experimental Computation Time - Start
         startTime = System.currentTimeMillis();

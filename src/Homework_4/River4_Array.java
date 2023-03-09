@@ -219,11 +219,11 @@ public class River4_Array {
     // MAIN ----------------------------------------------------
     public static void main(String[] args) {
         // Experimental Computation Time - Initialize
-        int trials = 1;
+        int trials = 10;
         long startTime;
         long endTime;
         long avgTime;
-        int arraySize = 320000;
+        int arraySize = 5000;
 
         // Experimental Computation Time - Start
         startTime = System.currentTimeMillis();
