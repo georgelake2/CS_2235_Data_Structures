@@ -2,37 +2,53 @@ package Chapter_6;
 
 import Chapter_3.SinglyLinkedList;
 
-public class ArrayStack {
+public class ArrayStack<E> implements Stack<E> {
     // instance variables
     private E[] data;
     private static int CAPACITY = 1000;
-    private int t = -1;
+    private int t = -1; // index to the top (last) element of the stack
 
     // constructors
-    public E() {}
+    public ArrayStack() { this(CAPACITY); }
+    public ArrayStack( int capacity) {
+        data = (E[]) new Object[capacity];  // use this because of generics
+    }
 
     // methods
-    // access methods
+    // access methods ---------------------------------------
     // Peek at, return, top element
-    public E top() { return list.first(); }
+    public E top() {
+        if (isEmpty()) { return null; }
+
+        return data[t];
+    }
 
     // returns # of elements
-    public int size() { return list.getSize(); }
+    public int size () { return t + 1; }
 
     // returns true if stack is empty
-    public boolean isEmpty() { return list.isEmpty(); }
+    public boolean isEmpty() { return (t == -1); }
 
-    // update methods
+    // update methods ---------------------------------
     // add element to stack
-    public void push(E e) { list.addFirst(e); }
+    public void push(E e) {
+        if (size()==data.length) throw new IllegalStateException("Stack is full.");  // could also resize data[] w/ dynamic sizing
+        data[++t] = e;
+    }
 
     // remove element from stack
-    public E pop () { return list.removeFirst(); };
+    public E pop () {
+        if (isEmpty()) return null;
+
+        E answer = data[t];
+        data[t--] = null;
+        return answer;
+    }
 
 
     // MAIN
     public static void main(String[] args) {
-        LinkedStack<Integer> S = new LinkedStack<>();
+        ArrayStack<Integer> S = new ArrayStack<>();
         S.push(5);
         S.push(9);
         System.out.println("Size: " + S.size());
